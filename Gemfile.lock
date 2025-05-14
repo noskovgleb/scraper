@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/noskovgleb/scraper_lib.git
-  revision: f19824cc6dc24d279d977f813937358a13151a34
+  revision: 4c3cf333653ae3bc9094edf3605ecc8d4515218f
   specs:
     scraper_lib (0.1.0)
       ferrum

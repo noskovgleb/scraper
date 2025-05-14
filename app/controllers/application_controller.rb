@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
   rescue_from ActionController::ParameterMissing, with: :render_parameter_missing
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActionController::RoutingError, with: :render_not_found
+  rescue_from ActionController::BadRequest, with: :render_bad_request
   
   private
   
@@ -14,10 +15,32 @@ class ApplicationController < ActionController::API
   end
   
   def render_parameter_missing(exception)
-    render json: { error: exception.message }, status: :bad_request
+    render_error(exception.message, :bad_request)
   end
   
   def render_not_found(exception)
-    render json: { error: exception.message || 'Resource not found' }, status: :not_found
+    render_error(exception.message || 'Resource not found', :not_found)
+  end
+  
+  def render_bad_request(exception)
+    render_error(exception.message, :bad_request)
+  end
+  
+  # Standardized error response format
+  def render_error(message, status = :internal_server_error, details = nil)
+    response = {
+      error: {
+        message: message,
+        status: Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
+      }
+    }
+    
+    # Add details if provided
+    response[:error][:details] = details if details
+    
+    # Add request_id for tracking
+    response[:error][:request_id] = request.request_id if request.respond_to?(:request_id)
+    
+    render json: response, status: status
   end
 end
