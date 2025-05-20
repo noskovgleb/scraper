@@ -39,13 +39,13 @@ class DataController < ApplicationController
   # Default is true unless explicitly set to false
   def browser_param
     return true unless params.key?(:use_browser)
-    params[:use_browser].to_s.downcase != 'false'
+    params[:use_browser].to_s.downcase != "false"
   end
 
   # Determine if cache should be skipped
   # Default is false unless explicitly set to true
   def skip_cache_param
-    params[:skip_cache].to_s.downcase == 'true'
+    params[:skip_cache].to_s.downcase == "true"
   end
 
   # Get timeout parameter (in seconds)

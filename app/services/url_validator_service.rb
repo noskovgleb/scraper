@@ -16,12 +16,12 @@ class UrlValidatorService
 
   def validate!
     raise InvalidUrlError, "URL parameter is required" if @url.blank?
-    
+
     uri = URI.parse(@url)
     unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
       raise InvalidUrlError, "Invalid URL format"
     end
-    
+
     true
   rescue URI::InvalidURIError
     raise InvalidUrlError, "Invalid URL format"

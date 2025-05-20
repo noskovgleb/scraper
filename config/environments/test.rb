@@ -52,5 +52,4 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
   config.cache_store = :memory_store
   config.action_controller.perform_caching = true
-
 end

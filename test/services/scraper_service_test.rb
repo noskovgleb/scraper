@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class ScraperServiceTest < ActiveSupport::TestCase
   setup do
@@ -18,7 +18,7 @@ class ScraperServiceTest < ActiveSupport::TestCase
 
   test "calls ScraperLib::Client with correct parameters" do
     mock_client = Minitest::Mock.new
-    mock_client.expect :scrape, { "title" => "Example Domain" }, [@fields]
+    mock_client.expect :scrape, { "title" => "Example Domain" }, [ @fields ]
 
     ScraperLib::Client.stub :new, mock_client do
       result = ScraperService.scrape(url: @valid_url, fields: @fields, use_browser: true)
@@ -34,7 +34,7 @@ class ScraperServiceTest < ActiveSupport::TestCase
       assert_equal @valid_url, url
       assert_equal true, use_browser
       mock = Minitest::Mock.new
-      mock.expect :scrape, {}, [@fields]
+      mock.expect :scrape, {}, [ @fields ]
       mock
     } do
       ScraperService.scrape(url: @valid_url, fields: @fields, use_browser: true)
@@ -45,7 +45,7 @@ class ScraperServiceTest < ActiveSupport::TestCase
       assert_equal @valid_url, url
       assert_equal false, use_browser
       mock = Minitest::Mock.new
-      mock.expect :scrape, {}, [@fields]
+      mock.expect :scrape, {}, [ @fields ]
       mock
     } do
       ScraperService.scrape(url: @valid_url, fields: @fields, use_browser: false)
@@ -58,7 +58,7 @@ class ScraperServiceTest < ActiveSupport::TestCase
 
     mock_client = Minitest::Mock.new
     # The client should only be called once
-    mock_client.expect :scrape, mock_result, [@fields]
+    mock_client.expect :scrape, mock_result, [ @fields ]
 
     ScraperLib::Client.stub :new, mock_client do
       # First call should use the client
@@ -77,8 +77,8 @@ class ScraperServiceTest < ActiveSupport::TestCase
   test "skips cache when skip_cache is true" do
     mock_client = Minitest::Mock.new
     # The client should be called twice
-    mock_client.expect :scrape, { "title" => "First call" }, [@fields]
-    mock_client.expect :scrape, { "title" => "Second call" }, [@fields]
+    mock_client.expect :scrape, { "title" => "First call" }, [ @fields ]
+    mock_client.expect :scrape, { "title" => "Second call" }, [ @fields ]
 
     ScraperLib::Client.stub :new, mock_client do
       # First call
@@ -101,7 +101,7 @@ class ScraperServiceTest < ActiveSupport::TestCase
       assert_equal 60, timeout
 
       mock = Minitest::Mock.new
-      mock.expect :scrape, {}, [@fields]
+      mock.expect :scrape, {}, [ @fields ]
       mock
     } do
       ScraperService.scrape(

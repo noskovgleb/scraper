@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class UrlValidatorServiceTest < ActiveSupport::TestCase
   test "validates a valid HTTP URL" do
